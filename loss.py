@@ -9,11 +9,9 @@ def softmax_cross_entropy_with_logits(y_true, y_pred):
 	zero = tf.zeros(shape = tf.shape(pi), dtype=tf.float32)
 	where = tf.equal(pi, zero)
 
-	negatives = tf.fill(tf.shape(pi), -100.0) 
+	negatives = tf.fill(tf.shape(pi), -100.0)
 	p = tf.where(where, negatives, p)
-
+	# TODO: tf.nn.softmax_cross_entropy_with_logits_v2.
 	loss = tf.nn.softmax_cross_entropy_with_logits(labels = pi, logits = p)
 
 	return loss
-
-

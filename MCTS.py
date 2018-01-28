@@ -34,7 +34,7 @@ class Edge():
 					'Q': 0,
 					'P': prior,
 				}
-				
+
 
 class MCTS():
 
@@ -43,7 +43,7 @@ class MCTS():
 		self.tree = {}
 		self.cpuct = cpuct
 		self.addNode(root)
-	
+
 	def __len__(self):
 		return len(self.tree)
 
@@ -60,7 +60,7 @@ class MCTS():
 		while not currentNode.isLeaf():
 
 			lg.logger_mcts.info('PLAYER TURN...%d', currentNode.state.playerTurn)
-		
+
 			maxQU = -99999
 
 			if currentNode == self.root:
@@ -79,12 +79,12 @@ class MCTS():
 				U = self.cpuct * \
 					((1-epsilon) * edge.stats['P'] + epsilon * nu[idx] )  * \
 					np.sqrt(Nb) / (1 + edge.stats['N'])
-					
+
 				Q = edge.stats['Q']
 
 				lg.logger_mcts.info('action: %d (%d)... N = %d, P = %f, nu = %f, adjP = %f, W = %f, Q = %f, U = %f, Q+U = %f'
-					, action, action % 7, edge.stats['N'], round(edge.stats['P'],6), round(nu[idx],6), ((1-epsilon) * edge.stats['P'] + epsilon * nu[idx] )
-					, round(edge.stats['W'],6), round(Q,6), round(U,6), round(Q+U,6))
+					, action, action % 7, edge.stats['N'], np.round(edge.stats['P'],6), np.round(nu[idx],6), ((1-epsilon) * edge.stats['P'] + epsilon * nu[idx] )
+					, np.round(edge.stats['W'],6), np.round(Q,6), np.round(U,6), np.round(Q+U,6))
 
 				if Q + U > maxQU:
 					maxQU = Q + U
@@ -131,4 +131,3 @@ class MCTS():
 
 	def addNode(self, node):
 		self.tree[node.id] = node
-
